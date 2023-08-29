@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Aircraft, Aircraft_Tasks
 from simple_term_menu import TerminalMenu
-from prettycli import blue, red, yellow, color, green, magenta
+from prettycli import blue, red, yellow, green, magenta
 from helpers import App_Heading
 
 heading = App_Heading()
@@ -99,6 +99,10 @@ class AircraftMaintApp:
 
         else:
             print("Task addition cancelled.")
+
+    def remove_task_from_database(self, task):
+        self.session.delete(task)
+        self.session.commit()
     
     #Handle Pending work tasks
     def manage_pending_work(self):
@@ -114,9 +118,9 @@ class AircraftMaintApp:
             menu = TerminalMenu(options, title="Pending Work:")
             option_index = menu.show()
 
-            if option_index == 0:  
+            if option_index == 0:
                 self.add_task_to_pending()
-            elif option_index == 1: 
+            elif option_index == 1:
                 if not self.pending_tasks:
                     print("No pending tasks to remove.")
                 else:
@@ -127,6 +131,7 @@ class AircraftMaintApp:
                     if task_index >= 0 and task_index < len(self.pending_tasks):
                         removed_task = self.pending_tasks.pop(task_index)
                         print(f"Task removed from pending work: ATA {removed_task.ata_chapter_number} : {removed_task.task}")
+                        self.remove_task_from_database(removed_task)  # Remove the task from the database
             else:
                 break
 
