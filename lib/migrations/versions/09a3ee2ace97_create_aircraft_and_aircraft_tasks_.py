@@ -1,8 +1,8 @@
-"""create aircraft and tasks tables
+"""create Aircraft and Aircraft tasks tables
 
-Revision ID: 559641e027ee
+Revision ID: 09a3ee2ace97
 Revises: 
-Create Date: 2023-08-28 01:54:25.290829
+Create Date: 2023-08-28 20:46:02.154311
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '559641e027ee'
+revision: str = '09a3ee2ace97'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -32,6 +32,8 @@ def upgrade() -> None:
     sa.Column('ata_chapter_number', sa.Integer(), nullable=True),
     sa.Column('ata_chapter_name', sa.String(), nullable=True),
     sa.Column('task', sa.String(), nullable=True),
+    sa.Column('aircraft_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['aircraft_id'], ['Aircraft.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

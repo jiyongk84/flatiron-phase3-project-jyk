@@ -1,4 +1,4 @@
-from lib.models.aircraft_models import Aircraft
+from models.aircraft_models import Aircraft
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 

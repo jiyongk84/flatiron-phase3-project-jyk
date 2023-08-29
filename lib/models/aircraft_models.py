@@ -12,6 +12,8 @@ class Aircraft(Base):
     model = Column(String)
     body_type = Column(String)
 
+    tasks = relationship("Aircraft_Tasks", back_populates="aircraft")
+
     def __repr__(self):
         return f"\n<Aircraft" \
             + f"id={self.id}, " \
@@ -28,6 +30,10 @@ class Aircraft_Tasks(Base):
     ata_chapter_number = Column(Integer)
     ata_chapter_name = Column(String)
     task = Column(String)
+
+    aircraft_id = Column(Integer, ForeignKey('Aircraft.id'))
+    
+    aircraft = relationship("Aircraft", back_populates="tasks")
 
     def __repr__(self):
         return f"\n<Aircraft_Tasks " \

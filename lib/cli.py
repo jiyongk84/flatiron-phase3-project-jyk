@@ -23,7 +23,6 @@ class AircraftMaintApp:
 
         if aircraft_entry_index >= 0:
             selected_model = aircraft_models[aircraft_entry_index]
-            print(f"You have selected aircraft model: {selected_model}")
             self.show_aircraft_tasks(selected_model)
 
     def show_aircraft_tasks(self, selected_model):
