@@ -1,0 +1,40 @@
+{
+    "aircraft": [
+        {
+            "id": 1,
+            "make": "Boeing",
+            "model": "737",
+            "body_type": "narrow"
+        },
+        {
+            "id": 2,
+            "make": "Boeing",
+            "model": "757",
+            "body_type": "narrow"
+        },
+        {
+            "id": 3,
+            "make": "Boeing",
+            "model": "777",
+            "body_type": "wide"
+        },
+        {
+            "id": 4,
+            "make": "Boeing",
+            "model": "787",
+            "body_type": "wide"
+        },
+        {
+            "id": 5,
+            "make": "Airbus",
+            "model": "A320",
+            "body_type": "narrow"
+        },
+        {
+            "id": 6,
+            "make": "Airbus",
+            "model": "A350",
+            "body_type": "wide"
+        }
+    ]
+}
