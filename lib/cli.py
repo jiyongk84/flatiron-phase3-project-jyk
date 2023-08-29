@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Aircraft, Aircraft_Tasks
 from simple_term_menu import TerminalMenu
-from prettycli import blue, red
+from prettycli import blue, red, yellow
 
 class AircraftMaintApp:
     def __init__(self):
@@ -52,6 +52,9 @@ class AircraftMaintApp:
                 print("No tasks available for selected aircraft model.")
                 break
 
+    def add_task_to_pending(self, task):
+        self.pending_tasks.append(task)
+        print(yellow("Task added to pending work."))
     
     #Handle Pending work tasks
     def manage_pending_work(self):
@@ -96,10 +99,11 @@ class AircraftMaintApp:
             # Pending work is selected
             elif menu_entry_index == 1:  
                 self.manage_pending_work()
-        
+
+            #Check if any pending tasks before exiting the app
             else:
                 if self.pending_tasks:
-                    print("You have pending tasks. Are you sure you want to quit? (Y/N)")
+                    print(yellow("You have pending tasks. Are you sure you want to quit? (Y/N)"))
                     choice = input().lower()
                     if choice == 'y':
                         print("Goodbye!")
