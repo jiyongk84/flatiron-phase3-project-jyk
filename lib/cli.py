@@ -52,9 +52,14 @@ class AircraftMaintApp:
                 print("No tasks available for selected aircraft model.")
                 break
 
-    def add_task_to_pending(self, task):
-        self.pending_tasks.append(task)
-        print(yellow("Task added to pending work."))
+    def add_task_to_pending(self):
+        print("Add a new task to pending work:")
+        ata_chapter_number = input("Enter the ATA chapter number: ")
+        task_description = input("Enter the task description: ")
+
+        new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
+        self.pending_tasks.append(new_task)
+        print("New task added to pending work.")
     
     #Handle Pending work tasks
     def manage_pending_work(self):
