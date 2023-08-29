@@ -30,7 +30,58 @@ class AircraftMaintApp:
             else:
                 break
 
+    #Display aircraft tasks from aircraft.db as menu items
+    def handle_aircraft_tasks(self, selected_model):
+        while True:
+            print(blue(f"You have selected aircraft model: {selected_model}"))
+            tasks = self.session.query(Aircraft_Tasks).all()
+
+            if tasks:
+                task_strings = [f"ATA {task.ata_chapter_number}, {task.task}" for task in tasks]
+                task_menu = TerminalMenu(task_strings + ["Go Back"], title="Select a Task:")
+                task_index = task_menu.show()
+
+                if task_index >= 0 and task_index < len(tasks):
+                    selected_task = tasks[task_index]
+                    print(red(f"You selected: ATA {selected_task.ata_chapter_number} : {selected_task.task}"))
+                    self.add_task_to_pending(selected_task)
+                    print(selected_task)
+                else:
+                    break
+            else:
+                print("No tasks available for selected aircraft model.")
+                break
+
     
+    #Handle Pending work tasks
+    def manage_pending_work(self):
+        while True:
+            if not self.pending_tasks:
+                print("No pending tasks.")
+            else:
+                print("Pending tasks:")
+                for i, task in enumerate(self.pending_tasks, start=1):
+                    print(f"{i}. ATA {task.ata_chapter_number} : {task.task}")
+
+            options = ["Add Task", "Remove Task", "Go Back"]
+            menu = TerminalMenu(options, title="Pending Work:")
+            option_index = menu.show()
+
+            if option_index == 0:  
+                self.add_task_to_pending()
+            elif option_index == 1: 
+                if not self.pending_tasks:
+                    print("No pending tasks to remove.")
+                else:
+                    task_strings = [f"ATA {task.ata_chapter_number}, {task.task}" for task in self.pending_tasks]
+                    task_menu = TerminalMenu(task_strings + ["Go Back"], title="Select a Task to Remove:")
+                    task_index = task_menu.show()
+
+                    if task_index >= 0 and task_index < len(self.pending_tasks):
+                        removed_task = self.pending_tasks.pop(task_index)
+                        print(f"Task removed from pending work: ATA {removed_task.ata_chapter_number} : {removed_task.task}")
+            else:
+                break
 
     #Initial app menu
     def main(self):
