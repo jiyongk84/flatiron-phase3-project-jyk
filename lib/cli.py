@@ -44,7 +44,8 @@ class AircraftMaintApp:
                 if task_index >= 0 and task_index < len(tasks):
                     selected_task = tasks[task_index]
                     print(red(f"You selected: ATA {selected_task.ata_chapter_number} : {selected_task.task}"))
-                    self.add_task_to_pending()
+                    self.pending_tasks.append(selected_task)
+                    print("Task added to pending work.")
                 else:
                     break
             else:
@@ -78,7 +79,7 @@ class AircraftMaintApp:
             print("Add a new task to pending work:")
             ata_chapter_number = input("Enter the ATA chapter number: ")
             task_description = input("Enter the task description: ")
-
+            
         #Check if both input fields have information.
             if not ata_chapter_number or not task_description:
                 print("ATA chapter number and task description cannot be empty. Task addition cancelled.")
