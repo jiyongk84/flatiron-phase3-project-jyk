@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Aircraft, Aircraft_Tasks
 from simple_term_menu import TerminalMenu
-from prettycli import blue, red, yellow, color
+from prettycli import blue, red, yellow, color, green, magenta
 from helpers import App_Heading
 
 heading = App_Heading()
@@ -83,14 +83,15 @@ class AircraftMaintApp:
         elif option_index == 1:
             print("Add a new task to pending work:")
             ata_chapter_number = input("Enter the ATA chapter number: ")
+            ata_chapter_name = input("Enter ATA name: ")
             task_description = input("Enter the task description: ")
 
             
         #Check if both input fields have information.
-            if not ata_chapter_number or not task_description:
-                print("ATA chapter number and task description cannot be empty. Task addition cancelled.")
+            if not ata_chapter_number or not ata_chapter_name or not task_description:
+                print(yellow("ATA chapter number and task description cannot be empty. Task addition cancelled."))
             else:       
-                new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
+                new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, ata_chapter_name=ata_chapter_name, task=task_description)
                 self.pending_tasks.append(new_task)
                 self.session.add(new_task)
                 self.session.commit()
@@ -133,7 +134,7 @@ class AircraftMaintApp:
     def main(self):
         while True:
             heading.hello_air_tech()
-            print(blue("Welcome Aircraft Tech! Please make a selection:"))
+            print(green("Welcome Aircraft Tech! Please make a selection:"))
             options = ["Aircraft", "Pending work", "Quit"]
             menu = TerminalMenu(options)
             menu_entry_index = menu.show()
@@ -150,10 +151,10 @@ class AircraftMaintApp:
                     print(yellow("You have pending tasks. Are you sure you want to quit? (Y/N)"))
                     choice = input().lower()
                     if choice == 'y':
-                        print("Goodbye!")
+                        print(magenta("Goodbye!"))
                         break
                 else:
-                    print("Goodbye!")
+                    print(magenta("Goodbye!"))
                     break
 
 if __name__ == "__main__":
