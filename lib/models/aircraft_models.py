@@ -1,4 +1,4 @@
-from sqlalchemy.orm import declarative_base , relationship
+from sqlalchemy.orm import declarative_base , relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 Base = declarative_base()
@@ -12,7 +12,7 @@ class Aircraft(Base):
     model = Column(String)
     body_type = Column(String)
 
-    tasks = relationship("Aircraft_Tasks", back_populates="aircraft")
+    tasks = relationship("Aircraft_Tasks", backref=backref("Aircraft"))
 
     def __repr__(self):
         return f"\n<Aircraft" \
@@ -33,7 +33,6 @@ class Aircraft_Tasks(Base):
 
     aircraft_id = Column(Integer, ForeignKey('Aircraft.id'))
     
-    aircraft = relationship("Aircraft", back_populates="tasks")
 
     def __repr__(self):
         return f"\n<Aircraft_Tasks " \
