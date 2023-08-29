@@ -79,6 +79,7 @@ class AircraftMaintApp:
             print("Add a new task to pending work:")
             ata_chapter_number = input("Enter the ATA chapter number: ")
             task_description = input("Enter the task description: ")
+
             
         #Check if both input fields have information.
             if not ata_chapter_number or not task_description:
@@ -86,6 +87,8 @@ class AircraftMaintApp:
             else:       
                 new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
                 self.pending_tasks.append(new_task)
+                self.session.add(new_task)
+                self.session.commit()
                 print("New task added to pending work.")
 
         else:
