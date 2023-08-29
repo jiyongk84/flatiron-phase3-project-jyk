@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Aircraft, Aircraft_Tasks
+from models.aircraft_models import Aircraft, Aircraft_Tasks
 from simple_term_menu import TerminalMenu
 from prettycli import blue
 
-class AircraftTechApp:
+class AircraftMaintApp:
     def __init__(self):
         # Create an SQLite database engine
         self.engine = create_engine("sqlite:///aircraft.db")
@@ -27,7 +27,9 @@ class AircraftTechApp:
             self.show_aircraft_tasks(selected_model)
 
     def show_aircraft_tasks(self, selected_model):
+        print(f"You have selected aircraft model: {selected_model}")
         tasks = self.session.query(Aircraft_Tasks).filter_by(ata_chapter_name=selected_model).all()
+    
         if tasks:
             print("Tasks for selected aircraft model:")
             for task in tasks:
@@ -50,5 +52,5 @@ class AircraftTechApp:
             print("Goodbye!")
 
 if __name__ == "__main__":
-    app = AircraftTechApp()
+    app = AircraftMaintApp()
     app.main()
