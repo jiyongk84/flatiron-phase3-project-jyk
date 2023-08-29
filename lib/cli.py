@@ -2,7 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Aircraft, Aircraft_Tasks
 from simple_term_menu import TerminalMenu
-from prettycli import blue, red, yellow
+from prettycli import blue, red, yellow, color
+from helpers import App_Heading
+
+heading = App_Heading()
+
+
 
 class AircraftMaintApp:
     def __init__(self):
@@ -53,7 +58,7 @@ class AircraftMaintApp:
                 break
     #Adding tasks to pending bucket
     def add_task_to_pending(self):
-        print("Do you want to add an existing task or a new task?")
+        print(red("Do you want to add an existing task or a new task?"))
         options = ["Existing Task", "New Task", "Cancel"]
         menu = TerminalMenu(options, title="Add Task:")
         option_index = menu.show()
@@ -127,6 +132,7 @@ class AircraftMaintApp:
     #Initial app menu
     def main(self):
         while True:
+            heading.hello_air_tech()
             print(blue("Welcome Aircraft Tech! Please make a selection:"))
             options = ["Aircraft", "Pending work", "Quit"]
             menu = TerminalMenu(options)
