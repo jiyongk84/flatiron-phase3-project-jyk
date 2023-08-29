@@ -75,7 +75,15 @@ class AircraftMaintApp:
             else:
                 print("No existing tasks available.")
 
+        elif option_index == 1:
+            print("Add a new task to pending work:")
+            ata_chapter_number = input("Enter the ATA chapter number: ")
+            task_description = input("Enter the task description: ")
         
+               
+            new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
+            self.pending_tasks.append(new_task)
+            print("New task added to pending work.")
 
         else:
             print("Task addition cancelled.")
