@@ -51,27 +51,40 @@ class AircraftMaintApp:
             else:
                 print("No tasks available for selected aircraft model.")
                 break
-
+    #Adding tasks to pending bucket
     def add_task_to_pending(self):
         print("Do you want to add an existing task or a new task?")
         options = ["Existing Task", "New Task", "Cancel"]
         menu = TerminalMenu(options, title="Add Task:")
         option_index = menu.show()
 
-        if option_index == 0:  # Add Existing Task
-            self.add_existing_task()
-        elif option_index == 1:  # Add New Task
-            self.add_new_task()
+        if option_index == 0: 
+            tasks = self.session.query(Aircraft_Tasks).all()
+
+            if tasks:
+                task_strings = [f"ATA {task.ata_chapter_number}, {task.task}" for task in tasks]
+                task_menu = TerminalMenu(task_strings + ["Go Back"], title="Select an Existing Task:")
+                task_index = task_menu.show()
+
+                if task_index >= 0 and task_index < len(tasks):
+                    selected_task = tasks[task_index]
+                    self.pending_tasks.append(selected_task)
+                    print("Existing task added to pending work.")
+                else:
+                    print("No existing tasks available.")
+            else:
+                print("No existing tasks available.")
+
+        
+
         else:
             print("Task addition cancelled.")
-
-    
     
     #Handle Pending work tasks
     def manage_pending_work(self):
         while True:
             if not self.pending_tasks:
-                print("No pending tasks.")
+                print(red("No pending tasks."))
             else:
                 print("Pending tasks:")
                 for i, task in enumerate(self.pending_tasks, start=1):
