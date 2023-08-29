@@ -53,13 +53,19 @@ class AircraftMaintApp:
                 break
 
     def add_task_to_pending(self):
-        print("Add a new task to pending work:")
-        ata_chapter_number = input("Enter the ATA chapter number: ")
-        task_description = input("Enter the task description: ")
+        print("Do you want to add an existing task or a new task?")
+        options = ["Existing Task", "New Task", "Cancel"]
+        menu = TerminalMenu(options, title="Add Task:")
+        option_index = menu.show()
 
-        new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
-        self.pending_tasks.append(new_task)
-        print("New task added to pending work.")
+        if option_index == 0:  # Add Existing Task
+            self.add_existing_task()
+        elif option_index == 1:  # Add New Task
+            self.add_new_task()
+        else:
+            print("Task addition cancelled.")
+
+    
     
     #Handle Pending work tasks
     def manage_pending_work(self):
