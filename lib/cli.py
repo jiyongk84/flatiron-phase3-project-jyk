@@ -79,11 +79,14 @@ class AircraftMaintApp:
             print("Add a new task to pending work:")
             ata_chapter_number = input("Enter the ATA chapter number: ")
             task_description = input("Enter the task description: ")
-        
-               
-            new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
-            self.pending_tasks.append(new_task)
-            print("New task added to pending work.")
+            
+        #Check if both input fields have information.
+            if not ata_chapter_number or not task_description:
+                print("ATA chapter number and task description cannot be empty. Task addition cancelled.")
+            else:       
+                new_task = Aircraft_Tasks(ata_chapter_number=ata_chapter_number, task=task_description)
+                self.pending_tasks.append(new_task)
+                print("New task added to pending work.")
 
         else:
             print("Task addition cancelled.")
