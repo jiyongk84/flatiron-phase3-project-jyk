@@ -62,7 +62,7 @@ class AircraftMaintApp:
         options = ["Existing Task", "New Task", "Cancel"]
         menu = TerminalMenu(options, title="Add Task:")
         option_index = menu.show()
-
+        #Display all the tasks from aircraft database as selectable by suer
         if option_index == 0: 
             tasks = self.session.query(Aircraft_Tasks).all()
 
@@ -79,7 +79,7 @@ class AircraftMaintApp:
                     print("No existing tasks available.")
             else:
                 print("No existing tasks available.")
-
+        #Input fields for adding new tasks not including in the database
         elif option_index == 1:
             print("Add a new task to pending work:")
             ata_chapter_number = input("Enter the ATA chapter number: ")
@@ -87,7 +87,7 @@ class AircraftMaintApp:
             task_description = input("Enter the task description: ")
 
             
-        #Check if both input fields have information.
+        #Check if all input fields have information.
             if not ata_chapter_number or not ata_chapter_name or not task_description:
                 print(yellow("ATA chapter number and task description cannot be empty. Task addition cancelled."))
             else:       
@@ -100,6 +100,7 @@ class AircraftMaintApp:
         else:
             print("Task addition cancelled.")
 
+    #Delete added task from database
     def remove_task_from_database(self, task):
         self.session.delete(task)
         self.session.commit()
@@ -113,7 +114,7 @@ class AircraftMaintApp:
                 print("Pending tasks:")
                 for i, task in enumerate(self.pending_tasks, start=1):
                     print(f"{i}. ATA {task.ata_chapter_number} : {task.task}")
-
+            #Pending tasks submenu
             options = ["Add Task", "Remove Task", "Go Back"]
             menu = TerminalMenu(options, title="Pending Work:")
             option_index = menu.show()
